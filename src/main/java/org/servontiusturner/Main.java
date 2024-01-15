@@ -31,6 +31,7 @@ public class Main {
             userNumber = Integer.parseInt(userInput.nextLine());
             guessCount ++;
         }
+        guessCount++;
         System.out.println("Congratulations! You guessed my number! It was " + chosenNumber);
         System.out.println("It took " + guessCount + " guesses!");
     }
