@@ -9,39 +9,27 @@ public class NumberGuesser {
 	private int guessCount;
 	private int cpuNumber;
 
-	public int getCpuNumber() {
-		return cpuNumber;
+	public int getCpuNumber() { return cpuNumber; }
+
+	public void setCpuNumber() {
+		Random randomNumber = new Random();
+		//Choose a random number between 1 and 101 not including 101
+		this.cpuNumber = randomNumber.nextInt(1, 101);
 	}
 
-	public void setCpuNumber(int cpuNumber) {
-		this.cpuNumber = cpuNumber;
-	}
+	public int getGuessCount() { return guessCount; }
 
-	public int getGuessCount() {
-		return guessCount;
-	}
-
-	public void setGuessCount(int guessCount) {
-		this.guessCount = guessCount;
-	}
+	public void setGuessCount(int guessCount) { this.guessCount = guessCount; }
 
 	public NumberGuesser() {}
 
-	public void setPlayerName(String playerName) {
-		this.playerName = playerName;
-	}
+	public void setPlayerName(String playerName) { this.playerName = playerName; }
 
-	public String getPlayerName() {
-		return playerName;
-	}
+	public String getPlayerName() { return playerName; }
 
-	public void setPlayerGuess(int playerGuess) {
-		this.guess = playerGuess;
-	}
-
-	public int getPlayerGuess() {
-		return guess;
-	}
+	public void setPlayerGuess(int playerGuess) { this.guess = playerGuess; }
+	
+	public int getPlayerGuess() { return guess; }
 
 	@Override
 	public String toString() {
@@ -49,33 +37,39 @@ public class NumberGuesser {
 	}
 
 	public void greetUser() {
-		System.out.print("Hi " + playerName + "!");
+		System.out.print("Hi " + playerName + "! \n\nI am thinking of a number between 1 and 100. Can you guess it?");
 	}
 
 	public void guessPlayerNumber() {
-		Random randomNumber = new Random();
 		Scanner scanner = new Scanner(System.in);
-		
-		//Choose a random number between 1 and 101 not including 101
-		int cpuNumber = randomNumber.nextInt(1, 101);
-		int guessCount = 0;
-		int currentUserGuess = this.guess;
+		String playAgain;
 
-		while (currentUserGuess != cpuNumber) {
-			if (currentUserGuess > cpuNumber) {
-				System.out.print(currentUserGuess + " Is too high. Guess again: ");
-			} else {
-				System.out.print(currentUserGuess + " Is too low. Guess again: ");
+		do {
+			int guessCount = 0;
+			setCpuNumber();
+			
+			System.out.println("\n \nPlease choose a number between 1 and " + cpuNumber); //100: ");
+			setPlayerGuess(Integer.parseInt(scanner.next()));
+			
+			while (guess != cpuNumber) {
+				if (guess > cpuNumber) {
+					System.out.print(guess + " Is too high. Guess again: ");
+				} else {
+					System.out.print(guess + " Is too low. Guess again: ");
+				}
+				
+				this.guess = Integer.parseInt(scanner.next());
+				guessCount ++;
 			}
-			currentUserGuess = Integer.parseInt(scanner.nextLine());
-			guessCount ++;
-		}
+			guessCount++;
 
-		guessCount++;
+			System.out.println("\nCONGRATULATIONS " + playerName + "! You guessed my number! It was " + cpuNumber);
+			System.out.println("It took " + guessCount + " guesses!");			
 
-		setPlayerGuess(currentUserGuess);
-		setGuessCount(guessCount);
-		setCpuNumber(cpuNumber);
+			System.out.println("Try Again (y/n)?: ");
+			playAgain = scanner.next();			
+		} while (playAgain.equalsIgnoreCase("y"));
+		
 		scanner.close();
 	}
 }
